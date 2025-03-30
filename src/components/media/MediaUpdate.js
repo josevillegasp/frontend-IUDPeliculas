@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { getMedias, updateMedias } from '../../service/mediaService';
-import { getGeneros } from '../../service/generoService'; // Servicio para géneros
-import { getDirectores } from '../../service/directorService'; // Servicio para directores
-import { getProductoras } from '../../service/productoraService'; // Servicio para productoras
-import { getTipos } from '../../service/tipoService'; // Servicio para tipos
+import { getGeneros } from '../../service/generoService';
+import { getDirectores } from '../../service/directorService';
+import { getProductoras } from '../../service/productoraService';
+import { getTipos } from '../../service/tipoService';
 import Swal from 'sweetalert2';
 
 export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
-  const [generos, setGeneros] = useState([]); // Estado para géneros
-  const [directores, setDirectores] = useState([]); // Estado para directores
-  const [productoras, setProductoras] = useState([]); // Estado para productoras
-  const [tipos, setTipos] = useState([]); // Estado para tipos
+  const [generos, setGeneros] = useState([]);
+  const [directores, setDirectores] = useState([]);
+  const [productoras, setProductoras] = useState([]);
+  const [tipos, setTipos] = useState([]);
   const [valoresForm, setValoresForm] = useState({
+    serial: '',
     titulo: '',
     sinopsis: '',
     url: '',
     imagen: '',
     anioestreno: '',
-    generoprincipal: { _id: '' }, // Género principal
-    directorprincipal: { _id: '' }, // Director principal
-    productora: { _id: '' }, // Productora
-    tipo: { _id: '' }, // Tipo
+    generoprincipal: '',
+    directorprincipal: '',
+    productora: '',
+    tipo: ''
   });
 
   const {
+    serial,
     titulo,
     sinopsis,
     url,
@@ -32,17 +34,27 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
     generoprincipal,
     directorprincipal,
     productora,
-    tipo,
+    tipo
   } = valoresForm;
 
-  // Cargar los datos del media al montar el componente
   useEffect(() => {
     const fetchMedia = async () => {
       try {
         const { data } = await getMedias();
         const mediaToUpdate = data.find((m) => m._id === mediaId);
         if (mediaToUpdate) {
-          setValoresForm(mediaToUpdate); // Cargar los datos en el estado
+          setValoresForm({
+            serial: mediaToUpdate.serial,
+            titulo: mediaToUpdate.titulo,
+            sinopsis: mediaToUpdate.sinopsis,
+            url: mediaToUpdate.url,
+            imagen: mediaToUpdate.imagen,
+            anioestreno: mediaToUpdate.anioestreno.toString(),
+            generoprincipal: mediaToUpdate.generoprincipal?._id || '',
+            directorprincipal: mediaToUpdate.directorprincipal?._id || '',
+            productora: mediaToUpdate.productora?._id || '',
+            tipo: mediaToUpdate.tipo?._id || ''
+          });
         }
       } catch (error) {
         console.log(error);
@@ -52,20 +64,19 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
     fetchMedia();
   }, [mediaId]);
 
-  // Cargar géneros, directores, productoras y tipos
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: generosData } = await getGeneros(); // Obtener géneros
+        const { data: generosData } = await getGeneros();
         setGeneros(generosData);
 
-        const { data: directoresData } = await getDirectores(); // Obtener directores
+        const { data: directoresData } = await getDirectores();
         setDirectores(directoresData);
 
-        const { data: productorasData } = await getProductoras(); // Obtener productoras
+        const { data: productorasData } = await getProductoras();
         setProductoras(productorasData);
 
-        const { data: tiposData } = await getTipos(); // Obtener tipos
+        const { data: tiposData } = await getTipos();
         setTipos(tiposData);
       } catch (error) {
         console.log(error);
@@ -75,46 +86,24 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
     fetchData();
   }, []);
 
-  // Manejar cambios en los campos del formulario
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
     setValoresForm({ ...valoresForm, [name]: value });
   };
 
-  // Manejar cambios en los campos de objetos anidados
-  const handleNestedChange = ({ target }) => {
-    const { name, value } = target;
-    const [parent, child] = name.split('.');
-    setValoresForm({
-      ...valoresForm,
-      [parent]: {
-        ...valoresForm[parent],
-        [child]: value,
-      },
-    });
-  };
-
-  // Manejar el envío del formulario
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const updatedMedia = {
+      serial,
       titulo,
       sinopsis,
       url,
       imagen,
-      anioestreno,
-      generoprincipal: {
-        _id: generoprincipal._id,
-      },
-      directorprincipal: {
-        _id: directorprincipal._id,
-      },
-      productora: {
-        _id: productora._id,
-      },
-      tipo: {
-        _id: tipo._id,
-      },
+      anioestreno: parseInt(anioestreno),
+      generoprincipal,
+      directorprincipal,
+      productora,
+      tipo
     };
 
     try {
@@ -153,6 +142,19 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
           <div className="row">
             <div className="col">
               <div className="mb-3">
+                <label className="form-label">Serial</label>
+                <input
+                  type="text"
+                  name="serial"
+                  value={serial}
+                  onChange={handleOnChange}
+                  required
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div className="mb-3">
                 <label className="form-label">Título</label>
                 <input
                   type="text"
@@ -164,6 +166,9 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="row">
             <div className="col">
               <div className="mb-3">
                 <label className="form-label">Sinopsis</label>
@@ -213,7 +218,7 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
               <div className="mb-3">
                 <label className="form-label">Año de Estreno</label>
                 <input
-                  type="date"
+                  type="number"
                   name="anioestreno"
                   value={anioestreno}
                   onChange={handleOnChange}
@@ -230,9 +235,9 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
                 <label className="form-label">Género Principal</label>
                 <select
                   className="form-select"
-                  name="generoprincipal._id"
-                  value={generoprincipal._id}
-                  onChange={handleNestedChange}
+                  name="generoprincipal"
+                  value={generoprincipal}
+                  onChange={handleOnChange}
                   required
                 >
                   <option value="">--SELECCIONE--</option>
@@ -249,9 +254,9 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
                 <label className="form-label">Director Principal</label>
                 <select
                   className="form-select"
-                  name="directorprincipal._id"
-                  value={directorprincipal._id}
-                  onChange={handleNestedChange}
+                  name="directorprincipal"
+                  value={directorprincipal}
+                  onChange={handleOnChange}
                   required
                 >
                   <option value="">--SELECCIONE--</option>
@@ -271,9 +276,9 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
                 <label className="form-label">Productora</label>
                 <select
                   className="form-select"
-                  name="productora._id"
-                  value={productora._id}
-                  onChange={handleNestedChange}
+                  name="productora"
+                  value={productora}
+                  onChange={handleOnChange}
                   required
                 >
                   <option value="">--SELECCIONE--</option>
@@ -290,9 +295,9 @@ export const MediaUpdate = ({ handleOpenModal, listMedias, mediaId }) => {
                 <label className="form-label">Tipo</label>
                 <select
                   className="form-select"
-                  name="tipo._id"
-                  value={tipo._id}
-                  onChange={handleNestedChange}
+                  name="tipo"
+                  value={tipo}
+                  onChange={handleOnChange}
                   required
                 >
                   <option value="">--SELECCIONE--</option>
