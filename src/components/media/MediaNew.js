@@ -131,195 +131,171 @@ export const MediaNew = ({ handleOpenModal, listMedias }) => {
   };
 
   return (
-    <div className="sidebar">
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col">
-            <div className="sidebar-header">
-              <h3>Nuevo Media</h3>
-              <i className="fa-solid fa-xmark" onClick={handleOpenModal}></i>
-            </div>
-          </div>
+    <div className="sidebar position-fixed top-0 start-0 w-100 h-100  shadow-lg p-4 d-flex flex-column justify-content-center align-items-center">
+      <div className="container bg-white p-4 rounded shadow-lg">
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center border-bottom pb-2 w-100">
+          <h3 className="text-primary fw-bold">Nuevo Media</h3>
+          <i className="fa-solid fa-xmark text-danger fs-3 cursor-pointer" onClick={handleOpenModal}></i>
         </div>
-        <div className="row">
-          <div className="col">
-            <hr />
-          </div>
-        </div>
-        <form onSubmit={handleOnSubmit}>
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Serial</label>
-                <input
-                  type="text"
-                  name="serial"
-                  value={valoresForm.serial}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+  
+        {/* Formulario */}
+        <form onSubmit={handleOnSubmit} className="mt-4 w-100">
+          <div className="row g-4">
+            {/* Primera fila */}
+            <div className="col-md-4">
+              <label className="form-label fw-semibold">Serial</label>
+              <input
+                type="text"
+                name="serial"
+                value={valoresForm.serial}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary border-primary"
+              />
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Título</label>
-                <input
-                  type="text"
-                  name="titulo"
-                  value={valoresForm.titulo}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+            <div className="col-md-4">
+              <label className="form-label fw-semibold">Título</label>
+              <input
+                type="text"
+                name="titulo"
+                value={valoresForm.titulo}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary"
+              />
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Sinopsis</label>
-                <input
-                  type="text"
-                  name="sinopsis"
-                  value={valoresForm.sinopsis}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+            <div className="col-md-4">
+              <label className="form-label fw-semibold">Año de Estreno</label>
+              <input
+                type="number"
+                name="anioestreno"
+                value={valoresForm.anioestreno}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary"
+              />
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">URL</label>
-                <input
-                  type="text"
-                  name="url"
-                  value={valoresForm.url}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+  
+            {/* Segunda fila */}
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">URL</label>
+              <input
+                type="text"
+                name="url"
+                value={valoresForm.url}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary"
+              />
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Imagen URL</label>
-                <input
-                  type="text"
-                  name="imagen"
-                  value={valoresForm.imagen}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Imagen URL</label>
+              <input
+                type="text"
+                name="imagen"
+                value={valoresForm.imagen}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary"
+              />
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Año de Estreno</label>
-                <input
-                  type="number"
-                  name="anioestreno"
-                  value={valoresForm.anioestreno}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
+  
+            {/* Tercera fila */}
+            <div className="col-12">
+              <label className="form-label fw-semibold">Sinopsis</label>
+              <textarea
+                name="sinopsis"
+                value={valoresForm.sinopsis}
+                onChange={handleOnChange}
+                required
+                className="form-control input-modern border-primary"
+                rows="3"
+              />
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Género Principal</label>
-                <select
-                  className="form-select"
-                  name="generoprincipal"
-                  value={valoresForm.generoprincipal}
-                  onChange={handleOnChange}
-                  required
-                >
-                  <option value="">--SELECCIONE--</option>
-                  {generos.map((genero) => (
-                    <option key={genero._id} value={genero._id}>
-                      {genero.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+  
+            {/* Cuarta fila - Selects */}
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Género Principal</label>
+              <select
+                className="form-select input-modern border-primary"
+                name="generoprincipal"
+                value={valoresForm.generoprincipal}
+                onChange={handleOnChange}
+                required
+              >
+                <option value="">--SELECCIONE--</option>
+                {generos.map((genero) => (
+                  <option key={genero._id} value={genero._id}>
+                    {genero.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Director Principal</label>
-                <select
-                  className="form-select"
-                  name="directorprincipal"
-                  value={valoresForm.directorprincipal}
-                  onChange={handleOnChange}
-                  required
-                >
-                  <option value="">--SELECCIONE--</option>
-                  {directores.map((director) => (
-                    <option key={director._id} value={director._id}>
-                      {director.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Director Principal</label>
+              <select
+                className="form-select input-modern border-primary"
+                name="directorprincipal"
+                value={valoresForm.directorprincipal}
+                onChange={handleOnChange}
+                required
+              >
+                <option value="">--SELECCIONE--</option>
+                {directores.map((director) => (
+                  <option key={director._id} value={director._id}>
+                    {director.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Productora</label>
-                <select
-                  className="form-select"
-                  name="productora"
-                  value={valoresForm.productora}
-                  onChange={handleOnChange}
-                  required
-                >
-                  <option value="">--SELECCIONE--</option>
-                  {productoras.map((productora) => (
-                    <option key={productora._id} value={productora._id}>
-                      {productora.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+  
+            {/* Quinta fila - Más Selects */}
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Productora</label>
+              <select
+                className="form-select input-modern border-primary"
+                name="productora"
+                value={valoresForm.productora}
+                onChange={handleOnChange}
+                required
+              >
+                <option value="">--SELECCIONE--</option>
+                {productoras.map((productora) => (
+                  <option key={productora._id} value={productora._id}>
+                    {productora.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Tipo</label>
-                <select
-                  className="form-select"
-                  name="tipo"
-                  value={valoresForm.tipo}
-                  onChange={handleOnChange}
-                  required
-                >
-                  <option value="">--SELECCIONE--</option>
-                  {tipos.map((tipo) => (
-                    <option key={tipo._id} value={tipo._id}>
-                      {tipo.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Tipo</label>
+              <select
+                className="form-select input-modern border-primary"
+                name="tipo"
+                value={valoresForm.tipo}
+                onChange={handleOnChange}
+                required
+              >
+                <option value="">--SELECCIONE--</option>
+                {tipos.map((tipo) => (
+                  <option key={tipo._id} value={tipo._id}>
+                    {tipo.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col">
-              <button className="btn btn-primary">Guardar</button>
-            </div>
+  
+          {/* Botón de guardar */}
+          <div className="mt-4 text-center">
+            <button className="btn btn-primary w-50 py-2 rounded-pill shadow-sm">Guardar</button>
           </div>
         </form>
       </div>
     </div>
   );
+  
+  
+  
 };

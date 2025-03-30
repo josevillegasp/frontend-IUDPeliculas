@@ -7,7 +7,8 @@ body {
     transition: 0.3s;
     display: flex;
     flex-direction: column;
-    height: 100%; /* Altura completa para la tarjeta */
+    height: 100%;
+    /* Altura completa para la tarjeta */
 }
 
 .card:hover {
@@ -15,15 +16,21 @@ body {
 }
 
 .card-img-top {
-    height: 200px; /* Altura fija para la imagen */
-    object-fit: cover; /* Cubrir el espacio sin distorsionar */
-    width: 100%; /* Ocupar todo el ancho */
+    height: 200px;
+    /* Altura fija para la imagen */
+    object-fit: cover;
+    /* Cubrir el espacio sin distorsionar */
+    width: 100%;
+    /* Ocupar todo el ancho */
 }
 
 .card-body {
-    flex: 1; /* Hace que el cuerpo de la tarjeta ocupe el espacio restante */
-    overflow-y: auto; /* Agrega scroll si el contenido es demasiado largo */
-    padding: 1rem; /* Espaciado interno */
+    flex: 1;
+    /* Hace que el cuerpo de la tarjeta ocupe el espacio restante */
+    overflow-y: auto;
+    /* Agrega scroll si el contenido es demasiado largo */
+    padding: 1rem;
+    /* Espaciado interno */
 }
 
 .newMedia {
@@ -59,5 +66,11 @@ body {
 }
 
 .btn-fixed-width {
-    width: 120px; /* Ancho fijo */
-  }
+    width: 120px;
+    /* Ancho fijo */
+}
+
+.navbar-custom {
+    height: 85px !important;
+    padding: 15px 0 !important;
+}

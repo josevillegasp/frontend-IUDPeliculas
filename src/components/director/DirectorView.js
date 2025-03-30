@@ -33,50 +33,55 @@ export const DirectorView = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <h2>Lista de Directores</h2>
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {directores.map((director) => (
-            <tr key={director._id}>
-              <td>{director.nombre}</td>
-              <td>{director.estado}</td>
-              <td>
-              <button
-               className="btn btn-warning btn-sm"
-               style={{ width: '120px' }} // Mismo ancho fijo de 120px
-                onClick={() => handleOpenEditModal(director)}
->
-                <i className="fa-solid fa-pen"></i> Editar
-                 </button>
-                <DirectorDelete
-                  directorId={director._id}
-                  onDeleteSuccess={listDirectores} // Pasar la función para actualizar la lista
-                />
-              </td>
+    <div className="container-fluid px-2 px-md-4 py-2 bg-white rounded shadow-sm d-flex flex-column align-items-center">
+      {/* Encabezado con título y botón */}
+      <div className="d-flex justify-content-between align-items-center mb-3 w-100" style={{ maxWidth: "900px" }}>
+        <h2 className="mb-3 fs-2 text-center text-md-start">Lista de Directores</h2>
+        {openModal ? (
+          <DirectorNew handleOpenModal={handleOpenModal} listDirectores={listDirectores} />
+        ) : (
+          <button className="btn btn-primary btn-sm d-flex align-items-center gap-2" onClick={handleOpenModal}>
+            <i className="fa-solid fa-plus"></i> Nuevo Director
+          </button>
+        )}
+      </div>
+  
+      {/* Contenedor de la tabla responsiva */}
+      <div className="table-responsive shadow rounded border bg-white p-2 p-md-4 w-100" style={{ maxWidth: "900px" }}>
+        <table className="table align-middle table-hover text-start w-100">
+          <thead className="bg-light text-dark fw-bold">
+            <tr>
+              <th className="py-2 py-md-3 fs-8 fs-md-6">Nombre</th>
+              <th className="py-2 py-md-3 fs-8 fs-md-6">Estado</th>
+              <th className="py-2 py-md-3 text-center fs-8 fs-md-6">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {openModal ? (
-        <DirectorNew
-          handleOpenModal={handleOpenModal}
-          listDirectores={listDirectores}
-        />
-      ) : (
-        <button className="btn btn-primary" onClick={handleOpenModal}>
-          <i className="fa-solid fa-plus"></i> Nuevo Director
-        </button>
-      )}
-
+          </thead>
+          <tbody>
+            {directores.map((director) => (
+              <tr key={director._id} className="border-bottom">
+                <td className="py-2 py-md-3 text-dark fs-8 fs-md-6">{director.nombre}</td>
+                <td className="py-2 py-md-3">
+                  <span className={`badge rounded-pill px-2 py-1 px-md-3 py-md-2 ${director.estado === 'activo' ? 'bg-success text-white' : 'bg-danger text-white'}`}>
+                    {director.estado}
+                  </span>
+                </td>
+                <td className="py-2 py-md-3">
+                  <div className='d-flex flex-column flex-md-row justify-content-center align-items-center gap-2'>
+                    <button
+                      className="btn btn-warning btn-sm d-flex align-items-center gap-1 shadow-sm rounded-pill px-2 py-1 px-md-3 py-md-2"
+                      onClick={() => handleOpenEditModal(director)}
+                    >
+                      <i className="fa-solid fa-pen"></i> Editar
+                    </button>
+                    <DirectorDelete directorId={director._id} onDeleteSuccess={listDirectores} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+  
       {openEditModal && (
         <DirectorUpdate
           directorId={selectedDirector._id}
@@ -86,4 +91,6 @@ export const DirectorView = () => {
       )}
     </div>
   );
+  
+  
 }; 

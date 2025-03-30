@@ -49,57 +49,39 @@ export const DirectorNew = ({ handleOpenModal, listDirectores }) => {
   };
 
   return (
-    <div className="sidebar">
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col">
-            <div className="sidebar-header">
-              <h3>Nuevo Director</h3>
-              <i className="fa-solid fa-xmark" onClick={handleOpenModal}></i>
-            </div>
-          </div>
+    <div className="sidebar bg-light shadow-lg p-4 position-fixed top-0 start-0 w-100 vh-100 d-flex flex-column justify-content-center align-items-center">
+      <div className="bg-white p-4 rounded shadow-lg w-100" style={{ maxWidth: "500px" }}>
+        <div className="d-flex justify-content-between align-items-center border-bottom pb-2">
+          <h3 className="text-primary">Nuevo Director</h3>
+          <i className="fa-solid fa-xmark text-danger fs-4 cursor-pointer" onClick={handleOpenModal}></i>
         </div>
-        <div className="row">
-          <div className="col">
-            <hr />
+        <form onSubmit={handleOnSubmit} className="mt-3 d-flex flex-column gap-3">
+          <div>
+            <label className="form-label fw-bold">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              value={valoresForm.nombre}
+              onChange={handleOnChange}
+              required
+              className="form-control border-primary shadow-sm rounded px-3 py-2"
+            />
           </div>
-        </div>
-        <form onSubmit={handleOnSubmit}>
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Nombre</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={valoresForm.nombre}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
-            </div>
+          <div>
+            <label className="form-label fw-bold">Estado</label>
+            <select
+              name="estado"
+              value={valoresForm.estado}
+              onChange={handleOnChange}
+              required
+              className="form-select border-primary shadow-sm rounded px-3 py-2"
+            >
+              <option value="">Seleccione un estado</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
           </div>
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label className="form-label">Estado</label>
-                <input
-                  type="text"
-                  name="estado"
-                  value={valoresForm.estado}
-                  onChange={handleOnChange}
-                  required
-                  className="form-control"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <button className="btn btn-primary">Guardar</button>
-            </div>
-          </div>
+          <button className="btn btn-primary w-100 py-2 rounded-pill shadow-sm">Guardar</button>
         </form>
       </div>
     </div>

@@ -15,7 +15,7 @@ export const DirectorDelete = ({ directorId, onDeleteSuccess }) => {
 
   return (
     <button
-   className="btn btn-danger btn-sm btn-fixed-width"
+   className="btn btn-danger btn-sm d-flex align-items-center gap-1 shadow-sm rounded-pill px-2 py-1 px-md-3 py-md-2"
    onClick={handleDelete}
 >
    <i className="fa-solid fa-trash"></i> Eliminar

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-import { Header } from './components/Ui/Header';
+import Header from "./components/Ui/Header";
 import { DirectorView } from './components/director/DirectorView';
 import { DirectorNew } from './components/director/DirectorNew'; // Importar DirectorNew
 import { GeneroView } from './components/genero/GeneroView';
@@ -14,7 +14,7 @@ import { TipoView } from './components/tipo/TipoView';
 function App() {
   return (
     <Router>
-      <Header />
+      <Header/>
       <Switch>
         <Route exact path='/' component={MediaView} />
         <Route exact path='/genero' component={GeneroView} />
